@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>コード進行再生</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="piano">
+        <div class="controls">
+            <button id="add-chord-block">+</button>
+            <button id="reset-sequence">リセット</button>
+            <button id="edit-mode-toggle">編集モード</button>
+            <label for="bpm-input">BPM:</label>
+            <input type="number" id="bpm-input" placeholder="120" min="1" value="120" />
+        </div>
+
+        <div class="chord-sequence" id="chord-sequence">
+            <!-- コード進行のブロックがここに表示される -->
+        </div>
+
+        <button id="play-sequence">コード進行を再生</button>
+        <button id="stop-sequence">停止</button>
+
+        <div class="keyboard">
+            <!-- 1オクターブ目 -->
+            <div class="key white" data-note="C"></div>
+            <div class="key black" data-note="C#" style="left: 11px;"></div>
+            <div class="key white" data-note="D"></div>
+            <div class="key black" data-note="D#" style="left: 51px;"></div>
+            <div class="key white" data-note="E"></div>
+            <div class="key white" data-note="F"></div>
+            <div class="key black" data-note="F#" style="left: 135px;"></div>
+            <div class="key white" data-note="G"></div>
+            <div class="key black" data-note="G#" style="left: 177px;"></div>
+            <div class="key white" data-note="A"></div>
+            <div class="key black" data-note="A#" style="left: 218px;"></div>
+            <div class="key white" data-note="B"></div>
+
+            <!-- 2オクターブ目 -->
+            <div class="key white" data-note="C2"></div>
+            <div class="key black" data-note="C#2" style="left: 300px;"></div>
+            <div class="key white" data-note="D2"></div>
+            <div class="key black" data-note="D#2" style="left: 340px;"></div>
+            <div class="key white" data-note="E2"></div>
+            <div class="key white" data-note="F2"></div>
+            <div class="key black" data-note="F#2" style="left: 422px;"></div>
+            <div class="key white" data-note="G2"></div>
+            <div class="key black" data-note="G#2" style="left: 465px;"></div>
+            <div class="key white" data-note="A2"></div>
+            <div class="key black" data-note="A#2" style="left: 508px;"></div>
+            <div class="key white" data-note="B2"></div>
+        </div>
+    </div>
+
+    <!-- モーダル -->
+    <div id="modal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close" id="close-modal">&times;</span>
+            <select id="modal-root-note">
+                <option value="C">C</option>
+                <option value="D">D</option>
+                <option value="E">E</option>
+                <option value="F">F</option>
+                <option value="G">G</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+            </select>
+            <select id="modal-accidental">
+                <option value="">♮</option>
+                <option value="#">♯</option>
+                <option value="b">♭</option>
+            </select>
+            <select id="modal-chord-type">
+                <option value="M">M</option>
+                <option value="m">m</option>
+                <option value="dim">ディミニッシュ</option>
+                <option value="aug">オーグメント</option>
+                <option value="7">7</option>
+                <option value="m7">m7</option>
+                <option value="M7">M7</option>
+                <option value="mM7">mM7</option>
+                <option value="dim7">dim7</option>
+                <option value="m7b5">m7(♭5)</option>
+                <option value="sus4">sus4</option>
+                <option value="sus2">sus2</option>
+                <option value="7sus4">7sus4</option>
+                <option value="6">6</option>
+                <option value="m6">m6</option>
+                <option value="9">9</option>
+                <option value="m9">m9</option>
+                <option value="M9">M9</option>
+                <option value="m(add9)">m(add9)</option>
+                <option value="add9">add9</option>
+                <option value="11">11</option>
+                <option value="m11">m11</option>
+                <option value="M11">M11</option>
+                <option value="13">13</option>
+                <option value="m13">m13</option>
+                <option value="M13">M13</option>
+                <option value="6/9">6/9</option>
+                <option value="5">5</option>
+                <option value="7b5">7(♭5)</option>
+                <option value="7b9">7(♭9)</option>
+                <option value="7#9">7(♯9)</option>
+            </select>
+            <select id="modal-slash-bass">
+                <option value="">(なし)</option>
+                <option value="/C">/C</option>
+                <option value="/C#">/C#</option>
+                <option value="/Db">/Db</option>
+                <option value="/D">/D</option>
+                <option value="/D#">/D#</option>
+                <option value="/Eb">/Eb</option>
+                <option value="/E">/E</option>
+                <option value="/F">/F</option>
+                <option value="/F#">/F#</option>
+                <option value="/Gb">/Gb</option>
+                <option value="/G">/G</option>
+                <option value="/G#">/G#</option>
+                <option value="/Ab">/Ab</option>
+                <option value="/A">/A</option>
+                <option value="/A#">/A#</option>
+                <option value="/Bb">/Bb</option>
+                <option value="/B">/B</option>
+            </select>
+            <input type="number" id="modal-measures-input" placeholder="拍数 (例: 4)" min="1" />
+            <button id="save-chord">保存</button>
+        </div>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
